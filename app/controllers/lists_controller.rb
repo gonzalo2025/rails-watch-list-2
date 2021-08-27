@@ -1,30 +1,39 @@
 class ListsController < ApplicationController
+    before_action :set_list, only: [:show, :destroy]
+
     def index
-        @lists = List.all
+      @lists = List.all
     end
-
-    def create
-        @list = List.new(list_params)
-        @list.save
-        redirect_to @list
-    end
-
-    def edit
-        @list = List.edit
-    end
-
+  
     def show
-        @list = List.show
+      @bookmark = Bookmark.new
     end
-
-    def update
-        @list = List.update(lists_params)
+  
+    def new
+      @list = List.new
+    end
+  
+    def create
+      @list = List.new(list_params)
+      if @list.save
         redirect_to list_path(@list)
+      else
+        render :new
+      end
     end
-
+  
     def destroy
-        @list.destroy
-        redirect_to list_path
+      @list.destroy
+      redirect_to lists_path
     end
-
-end
+  
+    private
+  
+    def set_list
+      @list = List.find(params[:id])
+    end
+  
+    def list_params
+      params.require(:list).permit(:name, :photo)
+    end
+end     
