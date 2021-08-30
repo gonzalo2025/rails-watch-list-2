@@ -1,8 +1,16 @@
-<%= @list.name %>
-<% @list.movies.each do |movie| %>
-  <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
-  <%= movie.title %>
-  <%= link_to "delete movie", bookmark_path(bookmark), method: :delete %>
-<%end%>
+<h1><%= @list.name %></h1>
+
+<div class="container">
+  <% @list.movies.each do |movie| %>
+    <div class="card">
+      <div class="card card-body">
+        <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+        <%= movie.title %>
+        <img src="<%= movie.poster_url %>">
+        <%= link_to "delete movie", bookmark_path(bookmark), method: :delete %>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <%= link_to "agregar pelicula", new_list_bookmark_path(@list) %>

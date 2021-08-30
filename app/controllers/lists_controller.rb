@@ -18,6 +18,7 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to list_path(@list)
     else
+      puts @list.errors.messages
       render :new
     end
   end
